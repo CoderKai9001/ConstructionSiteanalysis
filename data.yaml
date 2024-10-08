@@ -1,0 +1,7 @@
+train: ./data1/train/images
+val: ./data1/valid/images
+test: ./data1/test/images
+
+nc: 10
+names: ['Hardhat', 'Vest', 'NO-Hardhat', 'NO-Mask', 'NO-Safety Vest', 'Person', 'Safety Cone', 'Safety Vest', 'machinery', 'vehicle'] 
+

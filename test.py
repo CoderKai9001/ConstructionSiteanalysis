@@ -51,7 +51,7 @@ model = YOLO('./yolo_training/custom_yolo13/weights/best.pt')  # Update the path
 model2 = YOLO('./yolov10x.pt')
 
 # Image path
-img_path = './csiteimgs/3.png'
+img_path = './csiteimgs/sub1.jpeg'
 image = cv2.imread(img_path)
 image2 = cv2.imread(img_path)
 # Get prediction results

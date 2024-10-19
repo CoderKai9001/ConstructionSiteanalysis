@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processed Images</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #444;
+            margin-bottom: 40px;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .image-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 20px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        img {
+            width: 100%;
+            border-radius: 5px;
+            max-height: 350px;
+            object-fit: cover;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 40px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #28a745;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 5px;
+            width: 200px;
+            margin: 40px auto 0;
+            transition: background-color 0.4s ease, transform 0.4s ease;
+        }
+
+        a:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+        @media screen and (max-width: 768px) {
+            .image-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Processed Images</h1>
+    <div class="image-grid">
+        <div class="image-container">
+            <h2>Safety Equipment</h2>
+            <img src="/static/{{ output_image1 }}" alt="Output Image 1">
+        </div>
+        <div class="image-container">
+            <h2>Other Objects Detection</h2>
+            <img src="/static/{{ output_image2 }}" alt="Output Image 2">
+        </div>
+        <div class="image-container">
+            <h2>Bar Chart</h2>
+            <img src="/static/{{ output_image3 }}" alt="Output Image 3">
+        </div>
+        <div class="image-container">
+            <h2>Graph Analysis</h2>
+            <img src="/static/{{ output_image4 }}" alt="Output Image 4">
+        </div>
+    </div>
+    <a href="/">Process Another Image</a>
+</body>
+</html>

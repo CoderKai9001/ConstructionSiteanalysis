@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Work Assign</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .image-container {
+            position: relative;
+            display: inline-block;
+        }
+        .region {
+            position: absolute;
+            border: 2px dashed var(--accent-color);
+            background-color: rgba(26, 188, 156, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <h1>Select Regions of the Image</h1>
+    <div class="image-container">
+        <img id="image" src="{{ url_for('static', filename='images/11.jpeg') }}" alt="Selectable Image">
+    </div>
+    <div class="regions-list">
+        <h2>Selected Regions</h2>
+        <ul id="regions"></ul>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const image = document.getElementById('image');
+            const regionsList = document.getElementById('regions');
+            let startX, startY, region;
+
+            image.addEventListener('mousedown', (e) => {
+                startX = e.offsetX;
+                startY = e.offsetY;
+                region = document.createElement('div');
+                region.className = 'region';
+                region.style.left = `${startX}px`;
+                region.style.top = `${startY}px`;
+                image.parentElement.appendChild(region);
+            });
+
+            image.addEventListener('mousemove', (e) => {
+                if (!region) return;
+                const endX = e.offsetX;
+                const endY = e.offsetY;
+                region.style.width = `${Math.abs(endX - startX)}px`;
+                region.style.height = `${Math.abs(endY - startY)}px`;
+                region.style.left = `${Math.min(startX, endX)}px`;
+                region.style.top = `${Math.min(startY, endY)}px`;
+            });
+
+            image.addEventListener('mouseup', () => {
+                if (region) {
+                    const name = prompt('Enter a name for this region:');
+                    if (name) {
+                        const rect = region.getBoundingClientRect();
+                        const imageRect = image.getBoundingClientRect();
+                        const regionData = {
+                            name: name,
+                            x: rect.left - imageRect.left,
+                            y: rect.top - imageRect.top,
+                            width: rect.width,
+                            height: rect.height
+                        };
+                        // Send data to backend
+                        fetch('/add_region', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(regionData)
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                const listItem = document.createElement('li');
+                                listItem.textContent = name;
+                                regionsList.appendChild(listItem);
+                            } else {
+                                alert('Failed to save region.');
+                            }
+                        });
+                    }
+                    region = null;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
